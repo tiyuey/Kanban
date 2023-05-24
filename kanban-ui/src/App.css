@@ -1,0 +1,36 @@
+.list {
+  text-align: left;
+  margin: auto;
+}
+.submit-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.edit-form {
+  max-width: 300px;
+  margin: auto;
+}
+.bg-purple {
+  background-color: #5c52b6;
+}
+.btn-primary {
+  margin: 10px;
+}
+.list-group {
+  margin: 10px 0px 10px 0px;
+}
+#del-on-list {
+  margin-left: 10px;
+  border: none;
+}
+.foot {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+}
+.plus-btn {
+  margin: 0px;
+}
