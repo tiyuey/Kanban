@@ -239,16 +239,16 @@ export default class TasksList extends Component {
 
               <div>
                 <label>
-                  <strong>Brand:</strong>
+                  <strong>Priority:</strong>
                 </label>{" "}
-                {currentTask.brand}
+                {currentTask.priority}
               </div>
 
               <div>
                 <label>
-                  <strong>Due Date:</strong>
+                  <strong>Story Points:</strong>
                 </label>{" "}
-                {currentTask.due}
+                {currentTask.points}
               </div>
 
               <div>

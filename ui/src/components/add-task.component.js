@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import TaskDataService from "../services/task.service";
+import TaskDataService from "../services/task.service"
 import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 export default class AddTask extends Component {
   constructor(props) {
@@ -10,9 +8,9 @@ export default class AddTask extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeType = this.onChangeType.bind(this);
-    this.onChangeBrand = this.onChangeBrand.bind(this);
+    this.onChangePriority = this.onChangePriority.bind(this);
     this.onChangeUser = this.onChangeUser.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangePoints = this.onChangePoints.bind(this);
 
     this.saveTask = this.saveTask.bind(this);
     this.newTask = this.newTask.bind(this);
@@ -20,12 +18,12 @@ export default class AddTask extends Component {
     this.state = {
       id: null,
       title: "",
-      description: "",
+      description: "", 
       type: "",
-      brand: "",
+      priority: "",
       user: "",
       points: 1,
-      due: new Date(), // Bugünün tarihi olarak ayarlanır
+
       submitted: false
     };
   }
@@ -48,9 +46,9 @@ export default class AddTask extends Component {
     });
   }
 
-  onChangeBrand(e) {
+  onChangePriority(e) {
     this.setState({
-      brand: e.target.value
+      priority: e.target.value
     });
   }
 
@@ -60,9 +58,9 @@ export default class AddTask extends Component {
     });
   }
 
-  onChangeDate(date) {
+  onChangePoints(e) {
     this.setState({
-      due: date
+      points: e.target.value
     });
   }
 
@@ -71,9 +69,9 @@ export default class AddTask extends Component {
       title: this.state.title,
       description: this.state.description,
       type: this.state.type,
-      brand: this.state.brand,
+      priority: this.state.priority,
       user: this.state.user,
-      due: this.state.due
+      points: this.state.points
     };
 
     TaskDataService.create(data)
@@ -83,9 +81,9 @@ export default class AddTask extends Component {
           title: response.data.title,
           description: response.data.description,
           type: response.data.type,
-          brand: response.data.brand,
+          priority: response.data.priority,
           user: response.data.user,
-          due: response.data.due,
+          points: response.data.points,
 
           submitted: true
         });
@@ -102,9 +100,9 @@ export default class AddTask extends Component {
       title: "",
       description: "",
       type: "to do",
-      brand: "Hexaworks",
+      priority: "low",
       user: "",
-      due: new Date(), // Bugünün tarihi olarak ayarlanır
+      points: 1,
 
       submitted: false
     });
@@ -116,7 +114,10 @@ export default class AddTask extends Component {
         {this.state.submitted ? (
           <div>
             <h4>Task added successfully!</h4>
-            <Link className="btn btn-dark" to={"/"}>
+            <Link
+            className="btn btn-dark"
+            to={"/"}
+          >
               Back
             </Link>
             <button className="btn btn-primary" onClick={this.newTask}>
@@ -137,10 +138,10 @@ export default class AddTask extends Component {
                 name="title"
               />
             </div>
-
+  
             <div className="form-group">
-              <label htmlFor="description">Assign to</label>
-              <input
+            <label htmlFor="description">Assign to</label>
+            <input
                 type="text"
                 className="form-control"
                 id="user"
@@ -148,7 +149,7 @@ export default class AddTask extends Component {
                 value={this.state.user}
                 onChange={this.onChangeUser}
                 name="user"
-              />
+            />
             </div>
 
             <div className="form-group">
@@ -163,10 +164,10 @@ export default class AddTask extends Component {
                 name="description"
               />
             </div>
-
+  
             <div className="form-group">
-              <label htmlFor="description">Type</label>
-              <select
+            <label htmlFor="description">Type</label>
+            <select
                 type="text"
                 className="form-control"
                 id="type"
@@ -174,44 +175,47 @@ export default class AddTask extends Component {
                 value={this.state.type}
                 onChange={this.onChangeType}
                 name="type"
-              >
+            >
+
                 <option value="to do">To Do</option>
                 <option value="in progress">In Progress</option>
                 <option value="done">Done</option>
-              </select>
+            </select>
             </div>
-
+  
             <div className="form-group">
-              <label htmlFor="description">Brand</label>
-              <select
+            <label htmlFor="description">Priority</label>
+            <select
                 type="text"
                 className="form-control"
-                id="brand"
+                id="priority"
                 required
-                value={this.state.brand}
-                onChange={this.onChangeBrand}
-                name="brand"
-              >
-                <option value="Hexaworks">Hexaworks</option>
-                <option value="Babil">Babil</option>
-                <option value="Babil Kitap">Babil Kitap</option>
-              </select>
+                value={this.state.priority}
+                onChange={this.onChangePriority}
+                name="priority"
+            >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
             </div>
 
             <div className="form-group">
-              <label htmlFor="due">Due Date</label>
-              <DatePicker
+            <label htmlFor="description">Story Points</label>
+            <input
+                type="text"
                 className="form-control"
-                id="due"
-                selected={this.state.due}
-                onChange={this.onChangeDate}
-                dateFormat="dd-MM-yyyy"
-                name="due"
-                placeholderText="Select Due Date"
-              />
+                id="points"
+                required
+                value={this.state.points}
+                onChange={this.onChangePoints}
+                name="points"
+            />
             </div>
-
-            <Link className="btn btn-dark" to={"/"}>
+            <Link
+            className="btn btn-dark"
+            to={"/"}
+          >
               Back
             </Link>
 

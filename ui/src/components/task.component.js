@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TaskDataService from "../services/task.service";
-import ReactDatePicker from "react-datepicker";
 
 export default class Task extends Component {
   constructor(props) {
@@ -9,9 +8,9 @@ export default class Task extends Component {
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeType = this.onChangeType.bind(this);
-    this.onChangeBrand = this.onChangeBrand.bind(this);
+    this.onChangePriority = this.onChangePriority.bind(this);
     this.onChangeUser = this.onChangeUser.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangePoints = this.onChangePoints.bind(this);
 
     this.getTask = this.getTask.bind(this);
     //this.updatePublished = this.updatePublished.bind(this);
@@ -24,9 +23,9 @@ export default class Task extends Component {
         title: "",
         description: "",
         type: "to do",
-        brand: "Hexaworks",
+        priority: "in progress",
         user: "root",
-        due: ReactDatePicker
+        points: 1,
       },
       message: ""
     };
@@ -39,7 +38,7 @@ export default class Task extends Component {
   onChangeTitle(e) {
     const title = e.target.value;
 
-    this.setState(function (prevState) {
+    this.setState(function(prevState) {
       return {
         currentTask: {
           ...prevState.currentTask,
@@ -51,7 +50,7 @@ export default class Task extends Component {
 
   onChangeDescription(e) {
     const description = e.target.value;
-
+    
     this.setState(prevState => ({
       currentTask: {
         ...prevState.currentTask,
@@ -62,7 +61,7 @@ export default class Task extends Component {
 
   onChangeType(e) {
     const type = e.target.value;
-
+    
     this.setState(prevState => ({
       currentTask: {
         ...prevState.currentTask,
@@ -71,20 +70,20 @@ export default class Task extends Component {
     }));
   }
 
-  onChangeBrand(e) {
-    const brand = e.target.value;
-
+  onChangePriority(e) {
+    const priority = e.target.value;
+    
     this.setState(prevState => ({
       currentTask: {
         ...prevState.currentTask,
-        brand: brand
+        priority: priority
       }
     }));
   }
 
   onChangeUser(e) {
     const user = e.target.value;
-
+    
     this.setState(prevState => ({
       currentTask: {
         ...prevState.currentTask,
@@ -93,13 +92,13 @@ export default class Task extends Component {
     }));
   }
 
-  onChangeDate(e) {
-    const due = e.target.value;
-
+  onChangePoints(e) {
+    const points = e.target.value;
+    
     this.setState(prevState => ({
       currentTask: {
         ...prevState.currentTask,
-        due: due
+        points: points
       }
     }));
   }
@@ -133,7 +132,7 @@ export default class Task extends Component {
       });
   }
 
-  deleteTask() {
+  deleteTask() {    
     TaskDataService.delete(this.state.currentTask.id)
       .then(response => {
         console.log(response.data);
@@ -163,7 +162,7 @@ export default class Task extends Component {
                   onChange={this.onChangeTitle}
                 />
               </div>
-
+              
               <div className="form-group">
                 <label htmlFor="title">Assign to</label>
                 <input
@@ -185,59 +184,59 @@ export default class Task extends Component {
                   onChange={this.onChangeDescription}
                 />
               </div>
-
+              
               <div className="form-group">
                 <label htmlFor="type">type</label>
                 <select
-                  type="text"
-                  className="form-control"
-                  id="type"
-                  required
-                  value={currentTask.type}
-                  onChange={this.onChangeType}
+                type="text"
+                className="form-control"
+                id="type"
+                required
+                value={currentTask.type}
+                onChange={this.onChangeType}
                 >
 
-                  <option value="to do">To Do</option>
-                  <option value="in progress">In Progress</option>
-                  <option value="done">Done</option>
-                </select>
+                <option value="to do">To Do</option>
+                <option value="in progress">In Progress</option>
+                <option value="done">Done</option>
+             </select>
               </div>
-
+              
               <div className="form-group">
-                <label htmlFor="brand">brand</label>
+                <label htmlFor="priority">priority</label>
                 <select
+                type="text"
+                className="form-control"
+                id="priority"
+                required
+                value={currentTask.priority}
+                onChange={this.onChangePriority}
+            >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="points">Story Points</label>
+                <input
                   type="text"
                   className="form-control"
-                  id="brand"
-                  required
-                  value={currentTask.brand}
-                  onChange={this.onChangeBrand}
-                >
-                  <option value="Hexaworks">Hexaworks</option>
-                  <option value="Babil">Babil</option>
-                  <option value="Babil Kitap">Babil Kitap</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="due">Due Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="due"
-                  value={currentTask.due}
-                  onChange={this.onChangeDate}
+                  id="points"
+                  value={currentTask.points}
+                  onChange={this.onChangePoints}
                 />
               </div>
             </form>
-
+            
             <a href="/">
-              <button
-                type="submit"
-                className="badge badge-dark mr-2"
-              >
-                Back
-              </button></a>
+            <button
+              type="submit"
+              className="badge badge-dark mr-2"
+            >
+              Back
+            </button></a>
 
             <button
               className="badge badge-danger mr-2"
